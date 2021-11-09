@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -e
+
+PROJECT_DIR=$(git rev-parse --show-toplevel)
+JOOQ_ASSET_DIR=$PROJECT_DIR/src/main/resources/db/jooqAssets
+
+source $PROJECT_DIR/env
+
+# TODO: Find a way to not include jar in the repo.
+
+java \
+  -classpath $JOOQ_ASSET_DIR/jooq-3.15.1.jar:$JOOQ_ASSET_DIR/jooq-meta-3.15.1.jar:$JOOQ_ASSET_DIR/jooq-codegen-3.15.1.jar:$JOOQ_ASSET_DIR/mysql-connector-java-8.0.26.jar:$JOOQ_ASSET_DIR/reactive-streams-1.0.3.jar:$JOOQ_ASSET_DIR/jaxb-api-2.3.1.jar:$JOOQ_ASSET_DIR/r2dbc-spi-0.9.0.M1.jar:$JOOQ_ASSET_DIR/ \
+  -Djooq.codegen.jdbc.driver=com.mysql.cj.jdbc.Driver \
+  -Djooq.codegen.jdbc.url=jdbc:mysql://$DB_HOST:$DB_PORT/$DB_NAME \
+  -Djooq.codegen.jdbc.user=$DB_USER \
+  -Djooq.codegen.jdbc.password=$DB_PASS \
+  -Denv.projectDirectory=$PROJECT_DIR \
+  org.jooq.codegen.GenerationTool \
+  $JOOQ_ASSET_DIR/todo.xml
+
+java \
+  -classpath $JOOQ_ASSET_DIR/jooq-3.15.1.jar:$JOOQ_ASSET_DIR/jooq-meta-3.15.1.jar:$JOOQ_ASSET_DIR/jooq-codegen-3.15.1.jar:$JOOQ_ASSET_DIR/mysql-connector-java-8.0.26.jar:$JOOQ_ASSET_DIR/reactive-streams-1.0.3.jar:$JOOQ_ASSET_DIR/jaxb-api-2.3.1.jar:$JOOQ_ASSET_DIR/r2dbc-spi-0.9.0.M1.jar:$JOOQ_ASSET_DIR/ \
+  -Djooq.codegen.jdbc.driver=com.mysql.cj.jdbc.Driver \
+  -Djooq.codegen.jdbc.url=jdbc:mysql://$DB_HOST:$DB_PORT/$DB_NAME \
+  -Djooq.codegen.jdbc.user=$DB_USER \
+  -Djooq.codegen.jdbc.password=$DB_PASS \
+  -Denv.projectDirectory=$PROJECT_DIR \
+  org.jooq.codegen.GenerationTool \
+  $JOOQ_ASSET_DIR/todo_pojo.xml

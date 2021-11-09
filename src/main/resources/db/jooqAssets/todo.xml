@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-3.15.1.xsd">
+    <properties>
+        <env.projectDirectory>projectDirectory</env.projectDirectory>
+    </properties>
+    <generator>
+        <strategy>
+            <matchers>
+                <tables>
+                    <table>
+                        <!-- Match unqualified or qualified table names. If left empty, this matcher applies to all tables. -->
+                        <!-- <expression>MY_TABLE</expression> -->
+
+                        <!-- These elements influence the naming of a generated org.jooq.Table object. -->
+                        <!-- <tableClass> matcher </tableClass> -->
+                        <!-- <tableIdentifier> matcher </tableIdentifier> -->
+                        <!-- <tableImplements>com.example.MyOptionalCustomInterface</tableImplements> -->
+
+                        <!-- These elements influence the naming of a generated org.jooq.Record object. -->
+                        <!-- <recordClass>MatcherRule </recordClass> -->
+                        <!-- <recordImplements>com.example.MyOptionalCustomInterface</recordImplements> -->
+
+                        <!-- These elements influence the naming of a generated interface, implemented by
+                             generated org.jooq.Record objects and by generated POJOs. -->
+                        <!-- <interfaceClass> MatcherRule </interfaceClass> -->
+                        <!-- <interfaceImplements>com.example.MyOptionalCustomInterface</interfaceImplements> -->
+
+                        <!-- These elements influence the naming of a generated org.jooq.DAO object. -->
+                        <!-- <daoClass>  MatcherRule </daoClass> -->
+                        <!-- <daoImplements>com.example.MyOptionalCustomInterface</daoImplements> -->
+
+                        <!-- These elements influence the naming of a generated POJO object.  -->
+<!--                        <pojoClass>-->
+<!--                            <transform>PASCAL</transform>-->
+<!--                            <expression>$0_P</expression>-->
+<!--                        </pojoClass>-->
+                        <!-- <pojoExtends>com.example.MyOptionalCustomBaseClass</pojoExtends> -->
+
+                        <!-- <pojoImplements>com.example.MyOptionalCustomInterface</pojoImplements> -->
+                    </table>
+                </tables>
+            </matchers>
+        </strategy>
+        <!-- The default code generator. You can override this one, to generate your own code style.
+             Supported generators:
+             - org.jooq.codegen.JavaGenerator
+             - org.jooq.codegen.ScalaGenerator
+             Defaults to org.jooq.codegen.JavaGenerator -->
+        <name>org.jooq.codegen.KotlinGenerator</name>
+
+        <database>
+            <!-- The database type. The format here is:
+                 org.util.[database].[database]Database -->
+            <name>org.jooq.meta.mysql.MySQLDatabase</name>
+
+            <!-- The database schema (or in the absence of schema support, in your RDBMS this
+                 can be the owner, user, database name) to be generated -->
+<!--            <inputSchema>ptt</inputSchema>-->
+
+            <!-- All elements that are generated from your schema
+                 (A Java regular expression. Use the pipe to separate several expressions)
+                 Watch out for case-sensitivity. Depending on your database, this might be important! -->
+            <includes>.*</includes>
+
+            <!-- All elements that are excluded from your schema
+                 (A Java regular expression. Use the pipe to separate several expressions).
+                 Excludes match before includes, i.e. excludes have a higher priority -->
+            <excludes>flyway_schema_history</excludes>
+        </database>
+
+        <generate>
+            <pojos>false</pojos>
+            <serializablePojos>false</serializablePojos>
+            <daos>false</daos>
+            <records>true</records>
+            <javaTimeTypes>true</javaTimeTypes>
+        </generate>
+
+        <target>
+            <!-- The destination package of your generated classes (within the destination directory) -->
+            <packageName>me.adibfarrasy.ktor.demo.generated</packageName>
+
+            <!-- The destination directory of your generated classes. Using Maven directory layout here -->
+            <directory>${env.projectDirectory}/src/main/kotlin/</directory>
+        </target>
+    </generator>
+</configuration>
